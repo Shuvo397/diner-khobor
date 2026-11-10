@@ -2,26 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background: #ffffff;
-  color: #0b1f3a;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-}
-/* ১. সুন্দর বাংলা ফন্ট */
+/* বাংলা ফন্ট */
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
 
 body {
+  background-color: #FDFBF7 !important; /* ক্রিম পেপার ব্যাকগ্রাউন্ড */
+  color: #2C2C2C !important;            /* গাঢ় চকলেট টেক্সট */
   font-family: 'Hind Siliguri', sans-serif !important;
+  line-height: 1.7;
 }
 
-/* ২. নিউজের কার্ডে হোভার ও শ্যাডো ইফেক্ট */
+/* নিউজ কার্ড হোভার ও শ্যাডো */
 .news-card, article {
   transition: all 0.3s ease-in-out !important;
 }
 
 .news-card:hover, article:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px -5px rgba(120, 53, 15, 0.08) !important;
 }
