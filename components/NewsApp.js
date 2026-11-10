@@ -223,17 +223,34 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
                     )}
                   </div>
 
-                  <h2
-                    className={`font-serif font-bold leading-snug text-navy ${
-                      featured ? 'text-2xl sm:text-3xl' : 'text-lg'
-                    }`}
-                  >
-                    {s.title}
-                  </h2>
+                  {/* খবরের শিরোনাম, বিবরণ ও ছবি একসাথে সাজানো */}
+                  <div className={`flex gap-4 ${featured ? 'sm:flex-row flex-col-reverse' : 'flex-col-reverse'}`}>
+                    <div className="flex-1">
+                      <h2
+                        className={`font-serif font-bold leading-snug text-navy ${
+                          featured ? 'text-2xl sm:text-3xl' : 'text-lg'
+                        }`}
+                      >
+                        {s.title}
+                      </h2>
 
-                  {s.summary && (
-                    <p className="mt-3 line-clamp-4 text-[15px] text-navy/75">{s.summary}</p>
-                  )}
+                      {s.summary && (
+                        <p className="mt-3 line-clamp-4 text-[15px] text-navy/75">{s.summary}</p>
+                      )}
+                    </div>
+
+                    {/* ৩ নম্বর পয়েন্ট: RSS ফিড থেকে আসা ছবি এখানে শো করবে */}
+                    {s.image && (
+                      <img
+                        src={s.image}
+                        alt={s.title}
+                        className={`object-cover rounded-xl border border-navy/10 flex-shrink-0 ${
+                          featured ? 'w-full sm:w-72 h-48' : 'w-full sm:w-28 h-28'
+                        }`}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
 
                   <div className="mt-auto pt-5">
                     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-navy/10 pt-3 text-sm">
