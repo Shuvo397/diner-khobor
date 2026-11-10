@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 const CATS = ['bangladesh', 'international', 'sports', 'entertainment'];
-// How many stories the "All" view shows per category (total = 15)
 const QUOTA = { bangladesh: 5, international: 4, sports: 3, entertainment: 3 };
 
 const T = {
@@ -20,10 +19,8 @@ const T = {
     updated: 'সর্বশেষ হালনাগাদ',
     noResults: 'এই অনুসন্ধানে কোনো খবর পাওয়া যায়নি।',
     emptyTitle: 'এই মুহূর্তে খবর আনা যাচ্ছে না',
-    emptyText:
-      'কোনো সংবাদসূত্র থেকে ফিড পাওয়া যায়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন, অথবা lib/feeds.js ফাইলে ফিডের লিংক পরীক্ষা করুন।',
-    foot1:
-      'শিরোনাম ও সংক্ষিপ্ত অংশ মূল প্রকাশকদের। এই সাইট নিজে কোনো সংবাদ লেখে না; পূর্ণ খবরের জন্য মূল লিংকে যান।',
+    emptyText: 'কোনো সংবাদসূত্র থেকে ফিড পাওয়া যায়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।',
+    foot1: 'শিরোনাম ও সংক্ষিপ্ত অংশ মূল প্রকাশকদের। এই সাইট নিজে কোনো সংবাদ লেখে না; পূর্ণ খবরের জন্য মূল লিংকে যান।',
     sourcesOk: (a, b) => `${a}/${b}টি উৎস সক্রিয়`,
     sourcesLabel: 'উৎস',
     tz: 'ঢাকা (GMT+6)',
@@ -42,10 +39,8 @@ const T = {
     updated: 'Last updated',
     noResults: 'No stories match your search.',
     emptyTitle: 'News could not be loaded right now',
-    emptyText:
-      'No source feeds responded. Please try again shortly, or check the feed links in lib/feeds.js.',
-    foot1:
-      'Headlines and excerpts belong to the original publishers. This site writes no news of its own; follow the link for the full story.',
+    emptyText: 'No source feeds responded. Please try again shortly.',
+    foot1: 'Headlines and excerpts belong to the original publishers. This site writes no news of its own.',
     sourcesOk: (a, b) => `${a}/${b} sources active`,
     sourcesLabel: 'Sources',
     tz: 'Dhaka (GMT+6)',
@@ -90,7 +85,6 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
         used[s.category] = (used[s.category] || 0) + 1;
         return used[s.category] <= QUOTA[s.category];
       });
-      // Show the most important stories first
       out.sort((a, b) => b.score - a.score);
     }
     return out;
@@ -99,22 +93,22 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
   const pill = (active) =>
     `whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition ${
       active
-        ? 'bg-navy text-white shadow-sm'
-        : 'bg-navy-50 text-navy hover:bg-brand-light hover:text-brand-dark'
+        ? 'bg-[#78350F] text-white shadow-sm'
+        : 'bg-[#F3EFEA] text-[#78350F] hover:bg-[#E7E2DC]'
     }`;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2C2C2C]">
       {/* Header */}
-      <header className="border-b border-navy/10">
+      <header className="border-b border-[#E7E2DC] bg-[#FDFBF7]">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand font-serif text-2xl font-bold text-white">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#78350F] font-serif text-2xl font-bold text-white shadow-sm">
               খ
             </div>
             <div className="leading-tight">
-              <div className="font-serif text-2xl font-bold text-navy">দিনের খবর</div>
-              <div className="text-[11px] font-semibold tracking-[0.25em] text-brand">
+              <div className="font-serif text-2xl font-bold text-[#2C2C2C]">দিনের খবর</div>
+              <div className="text-[11px] font-semibold tracking-[0.25em] text-[#9A3412]">
                 {t.brandSub}
               </div>
             </div>
@@ -122,25 +116,25 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
 
           <div className="flex items-center gap-4">
             <div className="hidden text-right leading-tight sm:block">
-              <div className="text-sm font-semibold text-navy">
+              <div className="text-sm font-semibold text-[#2C2C2C]">
                 {now ? fmt({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }, now) : '\u00A0'}
               </div>
-              <div className="text-xs text-navy/60">
+              <div className="text-xs text-[#2C2C2C]/60">
                 {now ? fmt({ hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true }, now) : '--:--'}
                 {' · '}
                 {t.tz}
               </div>
             </div>
-            <div className="flex rounded-full border border-navy/15 p-1 text-sm font-semibold">
+            <div className="flex rounded-full border border-[#E7E2DC] p-1 text-sm font-semibold bg-[#F3EFEA]">
               <button
                 onClick={() => setLang('bn')}
-                className={`rounded-full px-3 py-1 ${lang === 'bn' ? 'bg-navy text-white' : 'text-navy'}`}
+                className={`rounded-full px-3 py-1 transition ${lang === 'bn' ? 'bg-[#78350F] text-white' : 'text-[#2C2C2C]'}`}
               >
                 বাংলা
               </button>
               <button
                 onClick={() => setLang('en')}
-                className={`rounded-full px-3 py-1 ${lang === 'en' ? 'bg-navy text-white' : 'text-navy'}`}
+                className={`rounded-full px-3 py-1 transition ${lang === 'en' ? 'bg-[#78350F] text-white' : 'text-[#2C2C2C]'}`}
               >
                 EN
               </button>
@@ -150,33 +144,32 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
       </header>
 
       {/* Hero */}
-      <section className="bg-navy">
+      <section className="bg-[#2C2C2C] text-[#FDFBF7] border-b-4 border-[#78350F]">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
-          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-emerald-300">
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-[#D97706]">
+            <span className="h-2 w-2 rounded-full bg-[#D97706]" />
             {t.heroKicker}
           </div>
           <h1 className="max-w-3xl font-serif text-3xl font-bold leading-snug text-white sm:text-5xl sm:leading-tight">
             {t.heroTitle}
           </h1>
-          <p className="mt-4 max-w-2xl text-base text-white/75 sm:text-lg">{t.heroSub}</p>
-          <p className="mt-5 text-sm text-white/50">
+          <p className="mt-4 max-w-2xl text-base text-[#FDFBF7]/80 sm:text-lg">{t.heroSub}</p>
+          <p className="mt-5 text-sm text-[#FDFBF7]/50">
             {t.updated}: {fmt({ day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true }, generatedAt)}
             {' · '}
             {t.note}
           </p>
         </div>
-        <div className="h-1 bg-brand" />
       </section>
 
       {/* Search and filters */}
-      <div className="sticky top-0 z-20 border-b border-navy/10 bg-white/95 backdrop-blur">
+      <div className="sticky top-0 z-20 border-b border-[#E7E2DC] bg-[#FDFBF7]/95 backdrop-blur">
         <div className="mx-auto max-w-6xl space-y-3 px-4 py-3">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={t.search}
-            className="w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-base text-navy outline-none placeholder:text-navy/40 focus:border-brand focus:ring-2 focus:ring-brand/20"
+            className="w-full rounded-xl border border-[#E7E2DC] bg-white px-4 py-3 text-base text-[#2C2C2C] outline-none placeholder:text-[#2C2C2C]/40 focus:border-[#78350F] focus:ring-2 focus:ring-[#78350F]/20"
           />
           <div className="flex gap-2 overflow-x-auto pb-1">
             <button onClick={() => setCat('all')} className={pill(cat === 'all')}>
@@ -185,7 +178,7 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
             {CATS.map((c) => (
               <button key={c} onClick={() => setCat(c)} className={pill(cat === c)}>
                 {t.cats[c]}
-                <span className="ml-1.5 opacity-60">{num(counts[c] || 0)}</span>
+                <span className="ml-1.5 opacity-70">{num(counts[c] || 0)}</span>
               </button>
             ))}
           </div>
@@ -195,12 +188,12 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
       {/* News */}
       <main className="mx-auto max-w-6xl px-4 py-8">
         {stories.length === 0 ? (
-          <div className="rounded-2xl border border-navy/10 bg-navy-50 p-8 text-center">
-            <h2 className="font-serif text-xl font-bold">{t.emptyTitle}</h2>
-            <p className="mx-auto mt-2 max-w-xl text-navy/70">{t.emptyText}</p>
+          <div className="rounded-2xl border border-[#E7E2DC] bg-[#F3EFEA] p-8 text-center">
+            <h2 className="font-serif text-xl font-bold text-[#2C2C2C]">{t.emptyTitle}</h2>
+            <p className="mx-auto mt-2 max-w-xl text-[#2C2C2C]/70">{t.emptyText}</p>
           </div>
         ) : list.length === 0 ? (
-          <p className="py-16 text-center text-navy/60">{t.noResults}</p>
+          <p className="py-16 text-center text-[#2C2C2C]/60">{t.noResults}</p>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {list.map((s, i) => {
@@ -208,26 +201,25 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
               return (
                 <article
                   key={s.id}
-                  className={`flex flex-col rounded-2xl border border-navy/10 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-lg ${
+                  className={`flex flex-col rounded-2xl border border-[#E7E2DC] bg-white p-5 shadow-sm transition hover:shadow-md ${
                     featured ? 'md:col-span-2' : ''
                   }`}
                 >
                   <div className="mb-3 flex items-center justify-between gap-2">
-                    <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand-dark">
+                    <span className="rounded-full bg-[#F3EFEA] px-3 py-1 text-xs font-semibold text-[#78350F]">
                       {t.cats[s.category]}
                     </span>
                     {s.sources.length > 1 && (
-                      <span className="text-xs font-medium text-brand-dark">
+                      <span className="text-xs font-medium text-[#9A3412]">
                         ● {t.covered(num(s.sources.length))}
                       </span>
                     )}
                   </div>
 
-                  {/* খবরের শিরোনাম, বিবরণ ও ছবি একসাথে সাজানো */}
                   <div className={`flex gap-4 ${featured ? 'sm:flex-row flex-col-reverse' : 'flex-col-reverse'}`}>
                     <div className="flex-1">
                       <h2
-                        className={`font-serif font-bold leading-snug text-navy ${
+                        className={`font-serif font-bold leading-snug text-[#2C2C2C] ${
                           featured ? 'text-2xl sm:text-3xl' : 'text-lg'
                         }`}
                       >
@@ -235,16 +227,15 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
                       </h2>
 
                       {s.summary && (
-                        <p className="mt-3 line-clamp-4 text-[15px] text-navy/75">{s.summary}</p>
+                        <p className="mt-3 line-clamp-4 text-[15px] text-[#2C2C2C]/80">{s.summary}</p>
                       )}
                     </div>
 
-                    {/* ৩ নম্বর পয়েন্ট: RSS ফিড থেকে আসা ছবি এখানে শো করবে */}
                     {s.image && (
                       <img
                         src={s.image}
                         alt={s.title}
-                        className={`object-cover rounded-xl border border-navy/10 flex-shrink-0 ${
+                        className={`object-cover rounded-xl border border-[#E7E2DC] flex-shrink-0 ${
                           featured ? 'w-full sm:w-72 h-48' : 'w-full sm:w-28 h-28'
                         }`}
                         loading="lazy"
@@ -253,9 +244,9 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
                   </div>
 
                   <div className="mt-auto pt-5">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-navy/10 pt-3 text-sm">
-                      <div className="text-navy/60">
-                        <span className="font-semibold text-navy">{s.source}</span>
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#E7E2DC] pt-3 text-sm">
+                      <div className="text-[#2C2C2C]/60">
+                        <span className="font-semibold text-[#2C2C2C]">{s.source}</span>
                         {' · '}
                         {fmt({ day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', hour12: true }, s.published)}
                       </div>
@@ -263,7 +254,7 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
                         href={s.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-semibold text-brand hover:text-brand-dark"
+                        className="font-semibold text-[#78350F] hover:underline"
                       >
                         {t.read} →
                       </a>
@@ -277,11 +268,11 @@ export default function NewsApp({ stories, status, sources, generatedAt }) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-navy/10 bg-navy-50">
-        <div className="mx-auto max-w-6xl space-y-2 px-4 py-8 text-sm text-navy/65">
+      <footer className="border-t border-[#E7E2DC] bg-[#F3EFEA]">
+        <div className="mx-auto max-w-6xl space-y-2 px-4 py-8 text-sm text-[#2C2C2C]/70">
           <p>{t.foot1}</p>
           <p>
-            <span className="font-semibold text-navy">{t.sourcesLabel}:</span> {sources.join(', ')}
+            <span className="font-semibold text-[#2C2C2C]">{t.sourcesLabel}:</span> {sources.join(', ')}
           </p>
           <p>
             {t.sourcesOk(num(status.ok), num(status.total))}
